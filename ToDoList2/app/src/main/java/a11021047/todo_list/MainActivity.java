@@ -1,17 +1,14 @@
-package a11021047.to_dolist;
+package a11021047.todo_list;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
@@ -28,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.editText);
         db = TodoDatabase.getInstance(getApplicationContext());
         System.out.println(TodoDatabase.DB_NAME);
-//        use the TodoDatabase to get all records from the database, make a new TodoAdapter and link the ListView to the adapter.
         Cursor cursor = db.selectAll();
         System.out.println(cursor);
         todoAdapter = new TodoAdapter(this, cursor);
@@ -39,20 +35,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void addItem(View view) {
         String text = editText.getText().toString();
-        editText.setText("");
-        ToDo todo = new ToDo(text);
-        db.addToDo(todo);
-        updateData();
+        if (!text.equals("")) {
+            editText.setText("");
+            ToDo todo = new ToDo(text);
+            db.addToDo(todo);
+            updateData();
+        }
     }
 
     public void updateData() {
         Cursor cursor = db.selectAll();
         todoAdapter.swapCursor(cursor);
     }
-
-//    protected void onListItemClick(ListView l, View v, int position, long id) {
-//        System.out.println("TEST");
-//    }
 
     public class ListClickListener implements AdapterView.OnItemClickListener {
         @Override

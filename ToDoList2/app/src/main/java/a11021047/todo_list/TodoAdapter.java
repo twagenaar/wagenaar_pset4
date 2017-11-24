@@ -1,10 +1,7 @@
-package a11021047.to_dolist;
+package a11021047.todo_list;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,20 +36,6 @@ public class TodoAdapter extends ResourceCursorAdapter {
         else {
             checkBox.setChecked(false);
         }
-        item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("CLICKED");
-                CheckBox checkBox = view.findViewById(R.id.list_item);
-                TextView textView = view.findViewById(R.id.list_textView);
-                long id = (Integer) textView.getTag();
-                int completed = checkBox.isChecked()? 0 : 1;
-                db.update(id, completed);
-                checkBox.setChecked(completed == 1);
-                System.out.println(id);
-
-            }
-        });
     }
 
     @Override
